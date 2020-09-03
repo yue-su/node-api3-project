@@ -24,17 +24,33 @@ router.get('/:id', (req, res) => {
 });
 
 router.delete('/:id', (req, res) => {
-  // do your magic!
+  posts.remove(req.params.id)
+  .then(post => res.status(200).json(post))
 });
 
 router.put('/:id', (req, res) => {
-  // do your magic!
+  posts.update(req.body)
+    .then(post => res.status(200).json(post))
+    .catch(err => {
+      console.log(err)
+      res.status(500).json({error: "error"})
+    })
 });
+
+router.post('/', validatePostId, (req, res) => {
+    res.status(201).json(req.post)
+})
 
 // custom middleware
 
 function validatePostId(req, res, next) {
-  // do your magic!
+  posts.insert(req.body)
+    .then(post => {
+      if (post) {
+        req.post = post
+        next()
+      }
+  })
 }
 
 module.exports = router;
