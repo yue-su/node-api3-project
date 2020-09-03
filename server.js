@@ -6,6 +6,7 @@ const usersRouter = require('./users/userRouter')
 const server = express();
 
 server.use(logger)
+server.use(express.json())
 
 server.get('/', (req, res) => {
   res.send(`<h2>Let's write some middleware!</h2>`);

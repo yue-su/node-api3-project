@@ -15,7 +15,7 @@ router.post("/", validateUser, (req, res) => {
 })
 
 router.post("/:id/posts", (req, res) => {
-  // do your magic!
+    
 })
 
 router.get("/", (req, res) => {
@@ -58,17 +58,15 @@ function validateUserId(req, res, next) {
   }).catch(err => res.status(500).json({message: 'Error retriving user'}))
 }
 
-function validateUser(req, res, next) {
+function validateUser(req, res, next){
   console.log(req.body)
   if (req.body) {
     if (req.body.name) {
       next()
-    }
-  }
+    } else {res.status(400).json({ message: "missing required name field" })}
+  } else {res.status(400).json({ message: "missing user data" })}
 }
 
-function validatePost(req, res, next) {
-  // do your magic!
-}
+
 
 module.exports = router
